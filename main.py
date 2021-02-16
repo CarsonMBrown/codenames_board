@@ -11,22 +11,23 @@ from kivy.uix.screenmanager import Screen
 Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
 # Config.set('kivy', 'desktop', 1)
 
-
 class Card(Button):
     def __init__(self, word, identifier, **kwargs):
         super().__init__(**kwargs)
         self.text = word
         self.id = identifier
         self.card_type = 0
-        self.font_name = "theme/font"
+        self.font_name = 'theme/font'
         self.font_size = 30
-        self.text_size = None, None
+        self.halign = 'center'
+        self.valign = 'middle'
         self.background_normal = 'theme/message.png'
         self.color = [0, 0, 0, 1]
 
     def on_touch_down(self, touch):
         if self.collide_point(touch.x, touch.y):
-            print(touch.button)
+            print(self.text_size, self.size, self.texture_size)
+            # print(touch.button)
             if touch.button == "left":
                 if self.background_normal == 'theme/blue_1.png':
                     self.background_normal = 'theme/message.png'
@@ -42,7 +43,7 @@ class Card(Button):
                     self.background_normal = 'theme/red_1.png'
                     self.color = [1, 1, 1, 1]
             elif touch.button == "middle":
-                if self.background_normal == 'theme/message.png':
+                if self.background_normal != 'theme/grey_1.png' and self.background_normal != 'theme/black_1.png':
                     self.background_normal = 'theme/grey_1.png'
                     self.color = [1, 1, 1, 1]
                 elif self.background_normal == 'theme/grey_1.png':
@@ -73,7 +74,7 @@ class MainScreen(Screen):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        print(keycode, text, modifiers)
+        # print(keycode, text, modifiers)
         if keycode[1] == 'spacebar':
             self.create_cards()
             return True
@@ -89,7 +90,7 @@ class MainScreen(Screen):
         r = randint(0, len(self.all_words) - 1)
         word = self.all_words[r]
         self.all_words.remove(word)
-        return word
+        return word.strip()
 
 
 class MainApp(App):
