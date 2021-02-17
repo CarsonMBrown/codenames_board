@@ -1,6 +1,10 @@
 from random import randint
-
 from kivy import Config
+
+Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
+Config.set('kivy', 'desktop', 1)
+Config.set('graphics', 'fullscreen', "auto")
+
 from kivy.app import App
 from kivy.graphics.svg import Window
 from kivy.properties import Property
@@ -8,8 +12,6 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 
-Config.set('input', 'mouse', 'mouse, multitouch_on_demand')
-# Config.set('kivy', 'desktop', 1)
 
 class Card(Button):
     def __init__(self, word, identifier, **kwargs):
@@ -29,27 +31,27 @@ class Card(Button):
             print(self.text_size, self.size, self.texture_size)
             # print(touch.button)
             if touch.button == "left":
-                if self.background_normal == 'theme/blue_1.png':
+                if 'blue' in self.background_normal:
                     self.background_normal = 'theme/message.png'
                     self.color = [0, 0, 0, 1]
                 else:
-                    self.background_normal = 'theme/blue_1.png'
+                    self.background_normal = 'theme/blue_' + str(randint(1,2)) + '.png'
                     self.color = [1, 1, 1, 1]
             elif touch.button == "right":
-                if self.background_normal == 'theme/red_1.png':
+                if 'red' in self.background_normal:
                     self.background_normal = 'theme/message.png'
                     self.color = [0, 0, 0, 1]
                 else:
-                    self.background_normal = 'theme/red_1.png'
+                    self.background_normal = 'theme/red_' + str(randint(1,2)) + '.png'
                     self.color = [1, 1, 1, 1]
             elif touch.button == "middle":
-                if self.background_normal != 'theme/grey_1.png' and self.background_normal != 'theme/black_1.png':
-                    self.background_normal = 'theme/grey_1.png'
+                if 'grey' not in self.background_normal and 'black' not in self.background_normal:
+                    self.background_normal = 'theme/grey_' + str(randint(1,2)) + '.png'
                     self.color = [1, 1, 1, 1]
-                elif self.background_normal == 'theme/grey_1.png':
+                elif 'grey' in self.background_normal:
                     self.background_normal = 'theme/black_1.png'
                     self.color = [1, 1, 1, 1]
-                elif self.background_normal == 'theme/black_1.png':
+                elif 'black' in self.background_normal:
                     self.background_normal = 'theme/message.png'
                     self.color = [0, 0, 0, 1]
 
